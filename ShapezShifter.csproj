@@ -20,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="AssembliesLoaderExport">
-      <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\AssembliesLoaderExport.dll</HintPath>
-    </Reference>
     <Reference Include="SPZGameAssembly">
       <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\SPZGameAssembly.dll</HintPath>
     </Reference>

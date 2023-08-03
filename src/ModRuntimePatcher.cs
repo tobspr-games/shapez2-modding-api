@@ -1,28 +1,23 @@
 using HarmonyLib;
-using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace ShapezShifter
 {
-    public class ModRuntimePatcher : IRuntimePatcher
+    public class ModRuntimePatcher : IModManager
     {
         private const string COMPANY = "tobspr";
         private const string GAME = "shapez2";
         private const string PRODUCT = "shapez_shifted";
 
-        public void Load()
+        public IEnumerable<IMod> Load(string modsPath)
         {
-            ModLoader.LoadMods();
+            var mods = ModLoader.LoadMods(modsPath);
 
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(asm => asm.GetLoadableTypes())
-                .Where(t => t.GetMethods().Any(m => m.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0)).Distinct();
-
-            var typesDebug = AppDomain.CurrentDomain.GetAssemblies()
-                                      .SelectMany(asm => asm.GetLoadableTypes());
 
             Harmony harmony = new Harmony($"{COMPANY}.{GAME}.{PRODUCT}");
             harmony.PatchAll(typeof(ShapezCallbackExt));
+
+            return mods;
         }
     }
 }

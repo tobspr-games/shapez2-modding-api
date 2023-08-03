@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 public static class ShapezCallbackExt
 {
