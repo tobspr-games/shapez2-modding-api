@@ -13,7 +13,9 @@ namespace ShapezShifter
         {
             var mods = ModLoader.LoadMods(modsPath);
 
-
+            // Todo: 1. find methods that have Prefix, Postfix and Replace attributes in all assemblies
+            // Todo: 2. Solve deps & conflicts between them
+            // Todo: 3. Patch in compatible order
             Harmony harmony = new Harmony($"{COMPANY}.{GAME}.{PRODUCT}");
             harmony.PatchAll(typeof(ShapezCallbackExt));
 
