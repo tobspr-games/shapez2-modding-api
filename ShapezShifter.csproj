@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>disable</Nullable>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,16 +18,23 @@
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.10.1">
       <IncludeAssets></IncludeAssets>
+      <GeneratePathProperty></GeneratePathProperty>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="SPZGameAssembly">
       <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\SPZGameAssembly.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo Copying from $(TargetDir) to &quot;%25SPZ2_PATH%25/Patchers&quot; &amp;&#xD;&#xA;xcopy &quot;$(TargetDir)&quot; &quot;%25SPZ2_PATH%25/Patchers&quot; /Y /I" />
+  </Target>
 
 </Project>
