@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace ShapezShifter
@@ -19,9 +20,7 @@ namespace ShapezShifter
                 Debug.LogWarning("No mods to load");
                 yield break;
             }
-            var assemblies = Directory.GetFiles(path, "*.dll");
-
-            // Todo: load in-game after download
+            var assemblies = Directory.GetFiles(path, SearchPatternForDynamicLibrary());
             foreach (var assemblyPath in assemblies)
             {
                 var assembly = Assembly.LoadFrom(assemblyPath);
@@ -32,6 +31,26 @@ namespace ShapezShifter
                 mod.Init();
                 yield return mod;
             }
+        }
+
+        private static string SearchPatternForDynamicLibrary()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "*.dll";
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return "*.so";
+            }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return "*.dylib";
+            }
+
+            Debug.LogWarning("Trying to load a dynamic library from an unsupported platform!?");
+            return "*";
         }
 
     }
