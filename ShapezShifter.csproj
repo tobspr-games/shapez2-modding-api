@@ -4,37 +4,27 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>disable</Nullable>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="HarmonyX" Version="2.10.1">
-      <IncludeAssets></IncludeAssets>
-      <GeneratePathProperty></GeneratePathProperty>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="MonoMod.RuntimeDetour" Version="22.3.23.4" />
+	</ItemGroup>
 
   <ItemGroup>
     <Reference Include="SPZGameAssembly">
-      <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\SPZGameAssembly.dll</HintPath>
+      <HintPath>$(SPZ2_PATH)\SPZGameAssembly.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>C:\Users\Lorenzo\Desktop\ShapezBuilds\spz2_alpha_7.3\shapez 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="echo Copying from $(TargetDir) to &quot;%25SPZ2_PATH%25/Patchers&quot; &amp;&#xD;&#xA;xcopy &quot;$(TargetDir)&quot; &quot;%25SPZ2_PATH%25/Patchers&quot; /Y /I" />
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(TargetDir)&quot; &quot;$(USERPROFILE)\AppData\LocalLow\tobspr Games\shapez 2\patchers&quot; /Y /I &amp;&#xD;&#xA;xcopy &quot;$(ProjectDir)/lib&quot; &quot;$(USERPROFILE)\AppData\LocalLow\tobspr Games\shapez 2\patchers\deps&quot; /Y /I" />
   </Target>
+	
 
 </Project>

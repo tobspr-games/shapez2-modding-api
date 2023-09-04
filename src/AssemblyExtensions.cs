@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ShapezShifter
+internal static class AssemblyExtensions
 {
-    internal static class AssemblyExtensions
+    internal static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
     {
-        internal static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
+        try
         {
-            try
-            {
-                return assembly.GetTypes();
-            }
-            catch (ReflectionTypeLoadException e)
-            {
-                return e.Types.Where(t => t != null);
-            }
+            return assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException e)
+        {
+            return e.Types.Where(t => t != null);
         }
     }
 }

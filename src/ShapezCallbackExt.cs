@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
-using HarmonyLib;
-using JetBrains.Annotations;
 
 public static class ShapezCallbackExt
 {
-    public static Action OnPostGameStart;
     public static Action OnPreGameStart;
+    public static Action OnPostGameStart;
 
-    [HarmonyPatch(typeof(GameCore), "Start")]
-    [HarmonyPrefix]
-    static void BeforeGameStart()
+    public static void BeforeGameStart()
     {
+        UnityEngine.Debug.Log("Before Game Start");
         OnPreGameStart?.Invoke();
     }
 
-    [HarmonyPatch(typeof(GameCore), "Start")]
-    [HarmonyPostfix]
-    private static void AfterGameStart()
+    public static void AfterGameStart()
     {
+        UnityEngine.Debug.Log("After Game Start");
         OnPostGameStart?.Invoke();
     }
+
 }
