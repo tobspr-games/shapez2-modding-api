@@ -1,6 +1,6 @@
 ### Requirements
 
-- Shapez2 Alpha 7.5+
+- Shapez2 Alpha 9
 - Visual Studio (recommended) or Rider or VSCode
 
 > For MacOS users, patching with either MonoMod, HarmonyX, MelonLoader, tModLoader, BepInEx, require running the game with Rosetta
