@@ -16,14 +16,21 @@
 	</ItemGroup>
 
     <ItemGroup>
-    <Reference Include="SPZGameAssembly">
-        <HintPath>$(SPZ2_PATH)\SPZGameAssembly.dll</HintPath>   
-        <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-        <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
-        <Private>False</Private>
-    </Reference>
+        <Reference Include="SPZGameAssembly">
+            <HintPath>$(SPZ2_PATH)\SPZGameAssembly.dll</HintPath>   
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Orchestration">
+            <HintPath>$(SPZ2_PATH)\Game.Orchestration.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
     </ItemGroup>
 
     <ItemGroup>
