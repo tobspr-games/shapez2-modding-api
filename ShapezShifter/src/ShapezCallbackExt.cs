@@ -7,14 +7,11 @@ public static class ShapezCallbackExt
 
     public static void BeforeGameStart()
     {
-        UnityEngine.Debug.Log("Before Game Start");
         OnPreGameStart?.Invoke();
     }
 
     public static void AfterGameStart()
     {
-        UnityEngine.Debug.Log("After Game Start");
         OnPostGameStart?.Invoke();
     }
-
 }

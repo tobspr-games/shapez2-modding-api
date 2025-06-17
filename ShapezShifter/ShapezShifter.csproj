@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>disable</Nullable>
+        <RunPostBuildEvent>Always</RunPostBuildEvent>
+        <LangVersion>9</LangVersion>
+
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputPath>$(SPZ2_PERSISTENT)\patchers</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3"/>
+        <PackageReference Include="NUnit" Version="3.14.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="SPZGameAssembly">
+            <HintPath>$(SPZ2_PATH)\SPZGameAssembly.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Orchestration">
+            <HintPath>$(SPZ2_PATH)\Game.Orchestration.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Publicize Include="SPZGameAssembly"/>
+        <Publicize Include="Game.Orchestration"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="deps\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>
