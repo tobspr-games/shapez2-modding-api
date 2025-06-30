@@ -1,17 +1,11 @@
-﻿using System;
+using Core.Events;
 
-public static class ShapezCallbackExt
+namespace ShapezShifter
 {
-    public static Action OnPreGameStart;
-    public static Action OnPostGameStart;
-
-    public static void BeforeGameStart()
+    public static class ShapezCallbackExt
     {
-        OnPreGameStart?.Invoke();
-    }
+        public static IEvent OnPreGameStart { get; internal set; }
 
-    public static void AfterGameStart()
-    {
-        OnPostGameStart?.Invoke();
+        public static IEvent OnPostGameStart { get; internal set; }
     }
 }

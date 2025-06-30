@@ -1,0 +1,17 @@
+{
+  "Name": "tobspr.ShapezShifter",
+  "Version": "0.0.1",
+  "Title": "Shapez 2 - Extended API",
+  "Description": "Extended functionality, convenience and mod support for shapez 2",
+  "IconPath": "",
+  "Assemblies": [
+    "ShapezShifter.dll"
+  ],
+  "Dependencies": [
+    {
+      "FullModName": "MonoMod.RuntimeDetours",
+      "Version": "25.2.3",
+      "SemVersionRange": "^25.2.3"
+    }
+  ]
+}

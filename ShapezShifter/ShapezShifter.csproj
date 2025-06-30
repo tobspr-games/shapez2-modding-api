@@ -8,9 +8,18 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <OutputPath>$(SPZ2_PERSISTENT)\patchers</OutputPath>
+        <ModIoGameId>10219</ModIoGameId>
+
+        <!-- Replace with your mod ID, make sure to include the install ID-->
+        <ModIoModId>5047584_6509968</ModIoModId>
+
+        <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+        <ModIoBasePath Condition="'$(IsWindows)' == 'true'">C:\Users\Public\mod.io</ModIoBasePath>
+        <ModIoBasePath Condition="'$(IsWindows)' != 'true'">$(HOME)/.config/unity3d/tobspr/shapez 2/mod.io</ModIoBasePath>
+        <OutputPath>$(ModIoBasePath)\$(ModIoGameId)\mods\$(ModIoModId)</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
+
 
     <ItemGroup>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
@@ -32,6 +41,12 @@
             <Private>False</Private>
         </Reference>
 
+        <Reference Include="Core">
+            <HintPath>$(SPZ2_PATH)\Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
             <Private>False</Private>
@@ -44,7 +59,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="deps\**">
+        <None Update="meta.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterTests", "..\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterEnclosedTypes", "..\ShapezShifterEnclosedTypes\ShapezShifterEnclosedTypes.csproj", "{04100994-7195-474E-81D4-143166C5003C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezSteamModPackageManager", "..\ShapezSteamModPackageManager\ShapezSteamModPackageManager.csproj", "{5933A4D6-8127-498B-855D-3BBC89CCCF6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezSteamModPackageManagerTests", "..\ShapezSteamModPackageManagerTests\ShapezSteamModPackageManagerTests.csproj", "{085B97C4-D97D-4A49-A1ED-3E2B8B359403}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{04100994-7195-474E-81D4-143166C5003C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5933A4D6-8127-498B-855D-3BBC89CCCF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5933A4D6-8127-498B-855D-3BBC89CCCF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5933A4D6-8127-498B-855D-3BBC89CCCF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5933A4D6-8127-498B-855D-3BBC89CCCF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{085B97C4-D97D-4A49-A1ED-3E2B8B359403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{085B97C4-D97D-4A49-A1ED-3E2B8B359403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{085B97C4-D97D-4A49-A1ED-3E2B8B359403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{085B97C4-D97D-4A49-A1ED-3E2B8B359403}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
