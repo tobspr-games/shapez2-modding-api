@@ -1,13 +1,16 @@
-using System.ArrayExtensions;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using JetBrains.Annotations;
+using ShapezShifter.ArrayExtensions;
 
 // Written by Burtsev-Alexey
 // MIT License
 // https://github.com/Burtsev-Alexey/net-object-deep-copy
 
-namespace System
+namespace ShapezShifter
 {
+    [PublicAPI]
     public static class ObjectExtensions
     {
         private static readonly MethodInfo CloneMethod =
@@ -23,7 +26,7 @@ namespace System
             return type.IsValueType & type.IsPrimitive;
         }
 
-        public static object Copy(this object originalObject)
+        public static object DeepCopy(this object originalObject)
         {
             return InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
         }
@@ -103,9 +106,9 @@ namespace System
             }
         }
 
-        public static T Copy<T>(this T original)
+        public static T DeepCopy<T>(this T original)
         {
-            return (T)Copy((object)original);
+            return (T)DeepCopy((object)original);
         }
     }
 

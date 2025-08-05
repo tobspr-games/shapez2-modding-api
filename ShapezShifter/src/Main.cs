@@ -1,77 +1,54 @@
+using System;
+using System.Runtime.CompilerServices;
 using Core.Logging;
 using JetBrains.Annotations;
-using ShapezShifter;
 
-[UsedImplicitly]
-public class Main : IMod
+[assembly: InternalsVisibleTo("ShapezShifterTests")]
+
+namespace ShapezShifter
 {
-    private readonly ILogger Logger;
-    private readonly GameCoreCallbackExtender CallbackExtender;
-
-    public Main(ILogger logger)
+    [UsedImplicitly]
+    public class Main : IMod
     {
-        logger.Info?.Log("Shapez Shifter Initialized");
-        Logger = logger;
-        CallbackExtender = new GameCoreCallbackExtender();
-        ShapezCallbackExt.OnPreGameStart = CallbackExtender.OnPreGameStart;
-        ShapezCallbackExt.OnPostGameStart = CallbackExtender.OnPostGameStart;
-        TestPatchingIsWorking(logger);
-    }
+        private readonly ILogger Logger;
+        private readonly GameCoreCallbackExtender CallbackExtender;
 
-    public void Dispose()
-    {
-        Logger.Info?.Log("Shapez Shifter shut down requested");
-        CallbackExtender.Dispose();
-        Logger.Info?.Log("Shapez Shifter shut down completed");
-    }
+        private readonly GameExtender GameExtender;
+        private bool Disposed;
 
-    private void TestPatchingIsWorking(ILogger logger)
-    {
-        var testClass = new TestClass();
-        testClass.Bump();
-        testClass.Bump();
-        testClass.Bump();
-        if (testClass.Count != 3)
+        public Main(ILogger logger)
         {
-            logger.Error?.Log("Hook is applied way too early");
+            logger.Info?.Log("Shapez Shifter Initialized");
+            Logger = logger;
+
+            SetupPathEnvironmentVariable();
+
+            // CallbackExtender = new GameCoreCallbackExtender();
+            // ShapezCallbackExt.OnPreGameStart = CallbackExtender.OnPreGameStart;
+            // ShapezCallbackExt.OnPostGameStart = CallbackExtender.OnPostGameStart;
+
+            var staticallyAccessibleExtendersProvider = new CachedStaticallyAccessibleExtendersProvider(logger);
+            GameExtender = new GameExtender(staticallyAccessibleExtendersProvider, logger);
         }
 
-        var hook = HookHelper.ReplaceHook<TestClass>(g => g.Bump(), NoBump);
-
-        testClass.Bump();
-        testClass.Bump();
-        testClass.Bump();
-
-        if (testClass.Count != 3)
+        private static void SetupPathEnvironmentVariable()
         {
-            logger.Error?.Log($"Hook is not being applied. Count: {testClass.Count}");
+            Environment.SetEnvironmentVariable("SPZ2_SHIFTER", typeof(Main).Assembly.Location);
         }
 
-        hook.Dispose();
-
-        testClass.Bump();
-        testClass.Bump();
-
-        if (testClass.Count != 5)
+        public void Dispose()
         {
-            logger.Error?.Log($"Hook cannot be unhooked. Count: {testClass.Count}");
-        }
+            if (Disposed)
+            {
+                Logger.Warning?.Log("Mod was already disposed");
+                return;
+            }
 
-        return;
-
-        void NoBump(TestClass t)
-        {
-        }
-    }
-
-
-    private class TestClass
-    {
-        public int Count;
-
-        public void Bump()
-        {
-            Count++;
+            Disposed = true;
+            GameExtender.Dispose();
+            Logger.Info?.Log("Shapez Shifter shut down requested");
+            CallbackExtender.Dispose();
+            Logger.Info?.Log("Shapez Shifter shut down completed");
         }
     }
 }

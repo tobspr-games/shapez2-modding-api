@@ -24,19 +24,16 @@
 
     <PropertyGroup>
         <PublicizeAll>true</PublicizeAll>
+        <PublicizerClearCacheOnClean>true</PublicizerClearCacheOnClean>
     </PropertyGroup>
     <ItemGroup>
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\ShapezShifter\ShapezShifter.csproj"/>
-    </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="ShapezShifterEnclosedTypes">
-            <HintPath>..\ShapezShifterEnclosedTypes\bin\Debug\net8.0\ShapezShifterEnclosedTypes.dll</HintPath>
-        </Reference>
+        <ProjectReference Include="..\ShapezShifterEnclosedTypes\ShapezShifterEnclosedTypes.csproj"/>
+        <ProjectReference Include="..\ShapezShifter\ShapezShifter.csproj"/>
     </ItemGroup>
 
 </Project>

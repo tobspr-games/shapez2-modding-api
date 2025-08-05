@@ -18,7 +18,7 @@ public class GameCoreCallbackExtender : IDisposable
 
     public void Dispose()
     {
-        GameHelper.Core.OnGameInitialized.Unregister(_OnPostGameStart.Invoke);
+        // GameHelper.Core?.OnGameInitialized?.TryUnregister(_OnPostGameStart.Invoke);
         _OnPreGameStart.Dispose();
         _OnPostGameStart.Dispose();
     }

@@ -1,8 +1,9 @@
+using ShapezShifter;
 using ShapezShifterTestsThirdParty;
 
 namespace ShapezShifterTests;
 
-public class Tests
+public class ReflectionSetHelperTests
 {
     [Test]
     public void AssertPublicClassFieldCanBeTypeSafelySetToArbitraryValue()

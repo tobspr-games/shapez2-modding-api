@@ -12,7 +12,8 @@ internal class SteamModLocationsProvider
 
     private IEnumerable<string> GetFolders()
     {
-        yield return Path.Combine(GameEnvironmentManager.PatchersPath, "..", "mods");
+        yield break;
+        // yield return Path.Combine(GameEnvironmentManager.PatchersPath, "..", "mods");
         // TODO yield return steam workshop ones
     }
 }

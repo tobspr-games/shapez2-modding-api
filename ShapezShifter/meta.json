@@ -9,7 +9,7 @@
   ],
   "Dependencies": [
     {
-      "FullModName": "MonoMod.RuntimeDetours",
+      "ModId": "MonoMod",
       "Version": "25.2.3",
       "SemVersionRange": "^25.2.3"
     }
