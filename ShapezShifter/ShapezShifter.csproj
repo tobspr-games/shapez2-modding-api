@@ -34,6 +34,11 @@
             <Private>False</Private>
         </Reference>
 
+        <Reference Include="Game.Core.Modding">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
         <Reference Include="Game.Orchestration">
             <HintPath>$(SPZ2_PATH)\Game.Orchestration.dll</HintPath>
             <Private>False</Private>
