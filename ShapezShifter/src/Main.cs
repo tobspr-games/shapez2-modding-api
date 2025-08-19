@@ -21,19 +21,22 @@ namespace ShapezShifter
             logger.Info?.Log("Shapez Shifter Initialized");
             Logger = logger;
 
-            SetupPathEnvironmentVariable();
+            SetupPathEnvironmentVariable(logger);
 
             // CallbackExtender = new GameCoreCallbackExtender();
             // ShapezCallbackExt.OnPreGameStart = CallbackExtender.OnPreGameStart;
             // ShapezCallbackExt.OnPostGameStart = CallbackExtender.OnPostGameStart;
 
-            var staticallyAccessibleExtendersProvider = new CachedStaticallyAccessibleExtendersProvider(logger);
+            CachedStaticallyAccessibleExtendersProvider staticallyAccessibleExtendersProvider = new(logger);
             GameExtender = new GameExtender(staticallyAccessibleExtendersProvider, logger);
         }
 
-        private static void SetupPathEnvironmentVariable()
+        private static void SetupPathEnvironmentVariable(ILogger logger)
         {
-            Environment.SetEnvironmentVariable("SPZ2_SHIFTER", typeof(Main).Assembly.Location);
+            const string environmentVariable = "SPZ2_SHIFTER";
+            string path = typeof(Main).Assembly.Location;
+            logger.Info?.Log($"Setting environment variable {environmentVariable} to {path}");
+            Environment.SetEnvironmentVariable(environmentVariable, path, EnvironmentVariableTarget.User);
         }
 
         public void Dispose()
