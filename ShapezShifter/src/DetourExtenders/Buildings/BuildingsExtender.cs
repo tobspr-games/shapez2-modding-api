@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Core.Logging;
 using Game.Core.Rendering.MeshGeneration;
 using Global.Core;
@@ -18,7 +17,8 @@ namespace ShapezShifter
             ExtendersProvider = extendersProvider;
             Logger = logger;
             BuildingsFactoryFromMetadataHook = DetourHelper
-                .CreateStaticPostfixHook<GameModeBuildingsFactory, MetaGameModeBuildings, IMeshCache,
+                .CreateStaticPostfixHook<GameModeBuildingsFactory, MetaGameModeBuildings, IMeshCache
+                    ,
                     VisualThemeBaseResources
                     , GameBuildings>((factory, meta, meshCache, resources) =>
                     GameModeBuildingsFactory.FromMetadata(meta, meshCache, resources), Postfix);
@@ -28,12 +28,12 @@ namespace ShapezShifter
             IMeshCache meshCache, VisualThemeBaseResources theme, GameBuildings gameBuildings)
         {
             var buildingsExtenders = ExtendersProvider.ExtendersOfType<IBuildingsExtender>();
-            Logger.Info?.Log($"Found {buildingsExtenders.Count()} extenders");
 
-            foreach (var buildingsExtender in buildingsExtenders)
+            foreach (IBuildingsExtender buildingsExtender in buildingsExtenders)
             {
-                Logger.Info?.Log($"Extending {gameBuildings.GetRefId()} buildings with {buildingsExtender}");
-                gameBuildings = buildingsExtender.ModifyGameBuildings(metaBuildings, gameBuildings, meshCache, theme);
+                gameBuildings =
+                    buildingsExtender.ModifyGameBuildings(metaBuildings, gameBuildings, meshCache,
+                        theme);
             }
 
             return gameBuildings;

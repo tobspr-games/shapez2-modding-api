@@ -10,6 +10,7 @@ namespace ShapezShifter
         private readonly BuildingsExtender BuildingsExtender;
         private readonly BuildingModulesExtender BuildingModulesExtender;
         private readonly ResearchExtender ResearchExtender;
+        private readonly BuffablesExtender BuffablesExtender;
 
         public GameExtender(IExtendersProvider extendersProvider, ILogger logger)
         {
@@ -18,6 +19,7 @@ namespace ShapezShifter
             BuildingsExtender = new BuildingsExtender(extendersProvider, logger);
             BuildingModulesExtender = new BuildingModulesExtender(extendersProvider);
             ResearchExtender = new ResearchExtender(extendersProvider, logger);
+            BuffablesExtender = new BuffablesExtender(extendersProvider);
         }
 
         public void Dispose()
@@ -27,6 +29,7 @@ namespace ShapezShifter
             BuildingsExtender.Dispose();
             PlacementInitiatorsExtender.Dispose();
             ToolbarExtender.Dispose();
+            BuffablesExtender.Dispose();
         }
     }
 }
