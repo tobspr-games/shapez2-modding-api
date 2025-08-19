@@ -8,8 +8,9 @@ namespace ShapezShifter.Buildings
 {
     public static class BuildingHelper
     {
-        public static BuildingDefinitionGroup CreateBuildingGroup(string id, Sprite icon, string title,
-            string description,
+        public static BuildingDefinitionGroup CreateBuildingGroup(string id, Sprite icon,
+            IText title,
+            IText description,
             bool isTransportBuilding,
             DefaultPreferredPlacementMode defaultPreferredPlacementMode,
             bool removable = true,
@@ -38,14 +39,19 @@ namespace ShapezShifter.Buildings
             IEnumerable<IBuildingPlacementRequirement> placementRequirements = null,
             MetaBuildingThroughputDisplayHelper throughputDisplayHelper = null)
         {
-            var definition = new BuildingDefinitionGroup(new BuildingDefinitionGroupId(id), icon, new RawText(title),
-                new RawText(description),
-                isTransportBuilding, removable, selectable, playerBuildable, allowPlaceOnNonFilledTiles,
-                pipetteOverrideId, defaultPreferredPlacementMode, allowPlaceOnNotch, autoAttractIOScoreMultiplier,
+            BuildingDefinitionGroup definition = new(new BuildingDefinitionGroupId(id), icon, title,
+                description,
+                isTransportBuilding, removable, selectable, playerBuildable,
+                allowPlaceOnNonFilledTiles,
+                pipetteOverrideId, defaultPreferredPlacementMode, allowPlaceOnNotch,
+                autoAttractIOScoreMultiplier,
                 autoConnect, autoRotateToFitStructures, allowNonForcingReplacementByOtherBuildings,
-                shouldSkipReplacementIOChecks, alwaysProducesConflictIndicators, renderConflictIndicatorMeshes,
-                renderConflictIndicatorVisualization, renderConnectorIndicators, renderConflictingConnectorIndicators,
-                showStatBeltProcessingTime, showStatBuildingsPerFullBelt, showInSpeedOverview, showAsResearchReward,
+                shouldSkipReplacementIOChecks, alwaysProducesConflictIndicators,
+                renderConflictIndicatorMeshes,
+                renderConflictIndicatorVisualization, renderConnectorIndicators,
+                renderConflictingConnectorIndicators,
+                showStatBeltProcessingTime, showStatBuildingsPerFullBelt, showInSpeedOverview,
+                showAsResearchReward,
                 requireStoreContentId, linkedEntryId,
                 placementIndicators ?? Array.Empty<Type>(),
                 placementRequirements ?? Array.Empty<IBuildingPlacementRequirement>(),
