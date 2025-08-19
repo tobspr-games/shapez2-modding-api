@@ -6,7 +6,7 @@ namespace ShapezShifter
     internal class GameExtender : IDisposable
     {
         private readonly ToolbarExtender ToolbarExtender;
-        private readonly PlacementInitiatorsExtender PlacementInitiatorsExtender;
+        private readonly BuildingsPlacementInitiatorsExtender BuildingsPlacementInitiatorsExtender;
         private readonly BuildingsExtender BuildingsExtender;
         private readonly BuildingModulesExtender BuildingModulesExtender;
         private readonly GameScenarioExtender GameScenarioExtender;
@@ -16,7 +16,8 @@ namespace ShapezShifter
         public GameExtender(IExtendersProvider extendersProvider, ILogger logger)
         {
             ToolbarExtender = new ToolbarExtender(extendersProvider);
-            PlacementInitiatorsExtender = new PlacementInitiatorsExtender(extendersProvider);
+            BuildingsPlacementInitiatorsExtender =
+                new BuildingsPlacementInitiatorsExtender(extendersProvider);
             BuildingsExtender = new BuildingsExtender(extendersProvider, logger);
             BuildingModulesExtender = new BuildingModulesExtender(extendersProvider);
             GameScenarioExtender = new GameScenarioExtender(extendersProvider, logger);
@@ -29,7 +30,7 @@ namespace ShapezShifter
             GameScenarioExtender.Dispose();
             BuildingModulesExtender.Dispose();
             BuildingsExtender.Dispose();
-            PlacementInitiatorsExtender.Dispose();
+            BuildingsPlacementInitiatorsExtender.Dispose();
             ToolbarExtender.Dispose();
             SimulationSystemsExtender.Dispose();
             BuffablesExtender.Dispose();
