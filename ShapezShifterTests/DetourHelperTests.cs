@@ -1,3 +1,4 @@
+using MonoMod.RuntimeDetour;
 using ShapezShifter;
 
 namespace ShapezShifterTests;
@@ -7,12 +8,13 @@ public class DetourHelperTests
     [Test]
     public void AssertArgumentLessMethodDetoursToPrefixBeforeOriginalExecution()
     {
-        var testClass = new TestClass(10);
-        using var hook = DetourHelper.CreatePrefixHook<TestClass>(t => t.Double(), Sum);
+        TestClass testClass = new(10);
+        using Hook? hook = DetourHelper.CreatePrefixHook<TestClass>(t => t.Double(), Sum);
 
         testClass.Double();
 
-        Assert.That(testClass.Val, Is.Not.EqualTo(24), () => "Hook failed to execute before method");
+        Assert.That(testClass.Val, Is.Not.EqualTo(24),
+            () => "Hook failed to execute before method");
         Assert.That(testClass.Val, Is.EqualTo(28), () => "Hook failed to execute");
 
         return;
@@ -26,8 +28,8 @@ public class DetourHelperTests
     [Test]
     public void AssertArgumentLessMethodDetoursToPostfixAfterOriginalExecution()
     {
-        var testClass = new TestClass(5);
-        using var hook = DetourHelper.CreatePostfixHook<TestClass>(t => t.Double(), Sum);
+        TestClass testClass = new(5);
+        using Hook? hook = DetourHelper.CreatePostfixHook<TestClass>(t => t.Double(), Sum);
 
         testClass.Double();
 
@@ -45,8 +47,10 @@ public class DetourHelperTests
     [Test]
     public void AssertMethodWithArgumentsPrefixPatchesArgumentBeforeExecution()
     {
-        var testClass = new TestClass2();
-        using var hook = DetourHelper.CreatePrefixHook<TestClass2, int>((tc, value) => tc.Store(value), Patch);
+        TestClass2 testClass = new();
+        using Hook? hook =
+            DetourHelper.CreatePrefixHook<TestClass2, int>((tc, value) => tc.Store(value),
+                Patch);
 
         testClass.Store(1);
 
@@ -63,10 +67,11 @@ public class DetourHelperTests
     [Test]
     public void AssertMethodWithReturnValuePostfixPatchesResultAfterExecution()
     {
-        var testClass = new TestClass3(16);
-        using var hook = DetourHelper.CreatePostfixHook<TestClass3, int>(tc => tc.Double(), Patch);
+        TestClass3 testClass = new(16);
+        using Hook? hook =
+            DetourHelper.CreatePostfixHook<TestClass3, int>(tc => tc.Double(), Patch);
 
-        var value = testClass.Double();
+        int value = testClass.Double();
 
         Assert.That(value, Is.EqualTo(16), () => "Hook failed to execute before method");
 

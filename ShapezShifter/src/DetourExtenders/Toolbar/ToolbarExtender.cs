@@ -12,20 +12,22 @@ namespace ShapezShifter
         public ToolbarExtender(IExtendersProvider extendersProvider)
         {
             ExtendersProvider = extendersProvider;
-            ModifyToolbarDataHook = DetourHelper.CreatePrefixHook<ToolbarBuilder, ToolbarData, IParentToolbarElement>(
-                (t, a) => t.BuildToolbar(a),
-                ModifyToolbarData);
+            ModifyToolbarDataHook = DetourHelper
+                .CreatePrefixHook<ToolbarBuilder, ToolbarData, IParentToolbarElement>(
+                    (t, a) => t.BuildToolbar(a),
+                    ModifyToolbarData);
 
-            ModifyToolbarModelHook = DetourHelper.CreatePostfixHook<ToolbarBuilder, ToolbarData, IParentToolbarElement>(
-                (t, a) => t.BuildToolbar(a),
-                ModifyToolbarModel);
+            ModifyToolbarModelHook = DetourHelper
+                .CreatePostfixHook<ToolbarBuilder, ToolbarData, IParentToolbarElement>(
+                    (t, a) => t.BuildToolbar(a),
+                    ModifyToolbarModel);
         }
 
         private ToolbarData ModifyToolbarData(ToolbarBuilder builder, ToolbarData toolbarData)
         {
             var toolbarDataExtenders = ExtendersProvider.ExtendersOfType<IToolbarDataExtender>();
 
-            foreach (var toolbarDataExtender in toolbarDataExtenders)
+            foreach (IToolbarDataExtender toolbarDataExtender in toolbarDataExtenders)
             {
                 toolbarData = toolbarDataExtender.ModifyToolbarData(toolbarData);
             }
@@ -39,7 +41,7 @@ namespace ShapezShifter
         {
             var toolbarModelExtenders = ExtendersProvider.ExtendersOfType<IToolbarModelExtender>();
 
-            foreach (var toolbarDataExtender in toolbarModelExtenders)
+            foreach (IToolbarModelExtender toolbarDataExtender in toolbarModelExtenders)
             {
                 toolbar = toolbarDataExtender.ModifyToolbarData(toolbar);
             }
