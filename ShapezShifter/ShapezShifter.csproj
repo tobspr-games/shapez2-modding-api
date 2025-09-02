@@ -24,8 +24,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.2.3"/>
-        <PackageReference Include="NUnit" Version="3.14.0"/>
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.0" />
+        <PackageReference Include="NUnit" Version="3.14.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -95,8 +95,6 @@
             <HintPath>$(SPZ2_PATH)\Game.Interaction.dll</HintPath>
             <Private>False</Private>
         </Reference>
-
-
         <Reference Include="Core">
             <HintPath>$(SPZ2_PATH)\Core.dll</HintPath>
             <Private>False</Private>
