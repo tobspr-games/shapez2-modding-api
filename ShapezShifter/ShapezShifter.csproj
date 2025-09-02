@@ -34,6 +34,46 @@
             <Private>False</Private>
         </Reference>
 
+        <Reference Include="Game.Core.Map">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Map.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Map.Model">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Map.Model.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Coordinates">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Coordinates.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Rendering">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Rendering.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.ImageConversionModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Simulation">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Simulation.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core">
+            <HintPath>$(SPZ2_PATH)\Game.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Content.Features">
+            <HintPath>$(SPZ2_PATH)\Game.Content.Features.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Modding">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
         <Reference Include="Game.Core.Modding">
             <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
             <Private>False</Private>
@@ -73,10 +113,20 @@
         </Reference>
     </ItemGroup>
 
+    <PropertyGroup>
+        <PublicizeAll>true</PublicizeAll>
+    </PropertyGroup>
+
     <ItemGroup>
-        <Publicize Include="SPZGameAssembly"/>
-        <Publicize Include="Game.Orchestration"/>
+        <DoNotPublicize Include="System.Collections.Generic:Dictionary" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="SPZGameAssembly:BeltLaneRenderingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="Game.Core.Coordinates" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="SPZGameAssembly:BuildingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="Game.Orchestration:ParentToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="Game.Orchestration:RootToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+
     </ItemGroup>
+
 
     <ItemGroup>
         <None Update="meta.json">
@@ -85,7 +135,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="src\Islands\"/>
+        <Folder Include="src\Islands\" />
     </ItemGroup>
 
 </Project>
