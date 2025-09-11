@@ -13,23 +13,31 @@ namespace ShapezShifter
         private static readonly Dictionary<ExtenderHandle, IExtender> ExtendersMap = new();
         private static ExtenderHandle LastHandle = ExtenderHandle.Invalid;
 
-        public static ExtenderHandle AddExtender<TExtender>(TExtender extender) where TExtender : IExtender
+        public static ExtenderHandle AddExtender<TExtender>(TExtender extender)
+            where TExtender : IExtender
         {
             LastHandle = LastHandle.Next();
             ExtendersMap.Add(LastHandle, extender);
             Version++;
+            Debugging.Logger.Info?.Log($"Adding extender {extender.GetType().Name} with handle {LastHandle}");
             return LastHandle;
         }
 
         public static void RemoveExtender(ExtenderHandle extenderHandle)
         {
-            ExtendersMap.Remove(extenderHandle);
+            if (!ExtendersMap.Remove(extenderHandle, out var extender))
+            {
+                Debugging.Logger.Error?.Log($"Trying to remove handle that is no longer valid {extenderHandle}");
+                return;
+            }
+
+            Debugging.Logger.Info?.Log($"Removing extender with handle {extender.GetType().Name}");
             Version++;
         }
 
         public static void RemoveExtender<TExtender>(ExtenderHandle extenderHandle, out TExtender extender)
         {
-            var removed = ExtendersMap.Remove(extenderHandle, out var ext);
+            bool removed = ExtendersMap.Remove(extenderHandle, out var ext);
             if (!removed)
             {
                 throw new KeyNotFoundException();

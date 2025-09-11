@@ -34,7 +34,7 @@ namespace ShapezShifter
         /// <inheritdoc />
         public override string ToString()
         {
-            return $"{Id}";
+            return Id.ToString();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

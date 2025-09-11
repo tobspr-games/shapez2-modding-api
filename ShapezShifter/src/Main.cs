@@ -20,6 +20,7 @@ namespace ShapezShifter
         {
             logger.Info?.Log("Shapez Shifter Initialized");
             Logger = logger;
+            Debugging.Logger = logger;
 
             SetupPathEnvironmentVariable(logger);
 
@@ -53,5 +54,10 @@ namespace ShapezShifter
             CallbackExtender.Dispose();
             Logger.Info?.Log("Shapez Shifter shut down completed");
         }
+    }
+
+    internal static class Debugging
+    {
+        public static ILogger Logger;
     }
 }

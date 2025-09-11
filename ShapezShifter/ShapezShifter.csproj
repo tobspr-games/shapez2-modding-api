@@ -24,8 +24,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.0" />
-        <PackageReference Include="NUnit" Version="3.14.0" />
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.0"/>
+        <PackageReference Include="NUnit" Version="3.14.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -116,12 +116,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <DoNotPublicize Include="System.Collections.Generic:Dictionary" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-        <DoNotPublicize Include="SPZGameAssembly:BeltLaneRenderingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-        <DoNotPublicize Include="Game.Core.Coordinates" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-        <DoNotPublicize Include="SPZGameAssembly:BuildingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-        <DoNotPublicize Include="Game.Orchestration:ParentToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
-        <DoNotPublicize Include="Game.Orchestration:RootToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <DoNotPublicize Include="System.Collections.Generic:Dictionary" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="SPZGameAssembly:BeltLaneRenderingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Core.Coordinates" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="SPZGameAssembly:BuildingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Orchestration:ParentToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Orchestration:RootToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
 
     </ItemGroup>
 
@@ -133,7 +133,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="src\Islands\" />
+        <Folder Include="src\Islands\"/>
     </ItemGroup>
 
 </Project>

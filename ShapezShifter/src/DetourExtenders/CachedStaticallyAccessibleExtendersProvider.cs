@@ -31,7 +31,7 @@ namespace ShapezShifter
             }
 
 
-            LogDictionary();
+            // LogDictionary();
 
             if (!CachedTypes.Contains(typeof(TExtender)))
             {
@@ -39,7 +39,7 @@ namespace ShapezShifter
                 CachedTypes.Add(typeof(TExtender));
             }
 
-            LogDictionary();
+            // LogDictionary();
 
             var extenderList = DataPerTypeCache.TryGetValuesForKey(typeof(TExtender), out var list)
                 ? list.Cast<TExtender>()

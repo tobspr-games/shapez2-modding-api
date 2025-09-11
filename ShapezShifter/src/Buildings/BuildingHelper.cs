@@ -8,7 +8,10 @@ namespace ShapezShifter.Buildings
 {
     public static class BuildingHelper
     {
-        public static BuildingDefinitionGroup CreateBuildingGroup(string id, Sprite icon,
+        [Obsolete]
+        public static BuildingDefinitionGroup CreateBuildingGroup(
+            BuildingDefinitionGroupId id,
+            Sprite icon,
             IText title,
             IText description,
             bool isTransportBuilding,
@@ -39,7 +42,7 @@ namespace ShapezShifter.Buildings
             IEnumerable<IBuildingPlacementRequirement> placementRequirements = null,
             MetaBuildingThroughputDisplayHelper throughputDisplayHelper = null)
         {
-            BuildingDefinitionGroup definition = new(new BuildingDefinitionGroupId(id), icon, title,
+            BuildingDefinitionGroup definition = new(id, icon, title,
                 description,
                 isTransportBuilding, removable, selectable, playerBuildable,
                 allowPlaceOnNonFilledTiles,
