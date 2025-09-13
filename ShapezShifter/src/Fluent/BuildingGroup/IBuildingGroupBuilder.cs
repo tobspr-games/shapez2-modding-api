@@ -58,7 +58,9 @@ namespace ShapezShifter.Fluent
         IBuildingGroupBuilder WithPipetteOverride(BuildingDefinitionGroupId overrideGroup);
         IBuildingGroupBuilder WithoutPipetteOverride();
 
-        IBuildingGroupBuilder WithPlacementIndicators();
+        IBuildingGroupBuilder WithPlacementIndicator<TPlacementIndicator>()
+            where TPlacementIndicator : IBuildingPlacementIndicator;
+
         IBuildingGroupBuilder WithoutPlacementIndicators();
 
         IBuildingGroupBuilder WithPlacementRequirements();

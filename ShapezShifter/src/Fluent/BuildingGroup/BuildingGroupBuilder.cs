@@ -46,7 +46,7 @@ namespace ShapezShifter.Fluent
         private bool ShowAsResearchReward;
         private UnlockableStoreContentId RequireStoreContentId;
         private WikiEntryId LinkedEntryId;
-        private IEnumerable<Type> PlacementIndicators;
+        private readonly List<Type> PlacementIndicators = new();
         private IEnumerable<IBuildingPlacementRequirement> PlacementRequirements;
         private MetaBuildingThroughputDisplayHelper ThroughputDisplayHelper;
 
@@ -325,9 +325,11 @@ namespace ShapezShifter.Fluent
             throw new NotImplementedException();
         }
 
-        public IBuildingGroupBuilder WithPlacementIndicators()
+        public IBuildingGroupBuilder WithPlacementIndicator<TPlacementIndicator>()
+            where TPlacementIndicator : IBuildingPlacementIndicator
         {
-            throw new NotImplementedException();
+            PlacementIndicators.Add(typeof(TPlacementIndicator));
+            return this;
         }
 
         public IBuildingGroupBuilder WithoutPlacementIndicators()
@@ -371,7 +373,7 @@ namespace ShapezShifter.Fluent
         public BuildingDefinitionGroup BuildAndRegister(GameBuildings gameBuildings)
         {
             Debugging.Logger.Info?.Log($"Registering {GroupId} to buildings");
-            var buildingGroup = new BuildingDefinitionGroup(GroupId,
+            BuildingDefinitionGroup buildingGroup = new(GroupId,
                 Icon,
                 Title,
                 Description,
@@ -399,7 +401,7 @@ namespace ShapezShifter.Fluent
                 ShowAsResearchReward,
                 RequireStoreContentId,
                 LinkedEntryId,
-                PlacementIndicators ?? Array.Empty<Type>(),
+                PlacementIndicators.ToArray() ?? Array.Empty<Type>(),
                 PlacementRequirements ?? Array.Empty<IBuildingPlacementRequirement>(),
                 ThroughputDisplayHelper);
 
