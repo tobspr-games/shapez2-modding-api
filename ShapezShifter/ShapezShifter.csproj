@@ -120,6 +120,11 @@
             <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
+
+        <Reference Include="UnityEngine.AssetBundleModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.AssetBundleModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
 
     <PropertyGroup>
