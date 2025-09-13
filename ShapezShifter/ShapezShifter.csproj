@@ -20,6 +20,7 @@
 
 
     <ItemGroup>
+        <PackageReference Include="AssimpNet" Version="4.1.0"/>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -53,6 +54,16 @@
 
         <Reference Include="UnityEngine.ImageConversionModule">
             <HintPath>$(SPZ2_PATH)\UnityEngine.ImageConversionModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Unity.Collections">
+            <HintPath>$(SPZ2_PATH)\Unity.Collections.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Unity.Mathematics">
+            <HintPath>$(SPZ2_PATH)\Unity.Mathematics.dll</HintPath>
             <Private>False</Private>
         </Reference>
 

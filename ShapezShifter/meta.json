@@ -1,6 +1,6 @@
 {
   "Name": "tobspr.ShapezShifter",
-  "Version": "0.3.0",
+  "Version": "0.4.0",
   "Title": "Shapez 2 - Extended API",
   "Description": "Extended functionality, convenience and mod support for shapez 2",
   "Author": "tobspr Games",
@@ -15,8 +15,11 @@
   "Dependencies": [
     {
       "ModId": "steam:3542712030",
-      "Version": "25.2.3",
-      "SemVersionRange": "^25.2.3"
+      "Version": "^25.2.3"
+    },
+    {
+      "ModId": "local:AssimpNet",
+      "Version": "4.*.*"
     }
   ]
 }
