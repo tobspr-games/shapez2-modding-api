@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Core.Logging;
 using JetBrains.Annotations;
+using ShapezShifter.Hijack;
 
 [assembly: InternalsVisibleTo("ShapezShifterTests")]
 
@@ -11,9 +12,8 @@ namespace ShapezShifter
     public class Main : IMod
     {
         private readonly ILogger Logger;
-        private readonly GameCoreCallbackExtender CallbackExtender;
 
-        private readonly GameExtender GameExtender;
+        private readonly GameInterceptors GameInterceptors;
         private bool Disposed;
 
         public Main(ILogger logger)
@@ -24,12 +24,8 @@ namespace ShapezShifter
 
             SetupPathEnvironmentVariable(logger);
 
-            // CallbackExtender = new GameCoreCallbackExtender();
-            // ShapezCallbackExt.OnPreGameStart = CallbackExtender.OnPreGameStart;
-            // ShapezCallbackExt.OnPostGameStart = CallbackExtender.OnPostGameStart;
-
-            CachedStaticallyAccessibleExtendersProvider staticallyAccessibleExtendersProvider = new(logger);
-            GameExtender = new GameExtender(staticallyAccessibleExtendersProvider, logger);
+            CachedStaticallyAccessibleRewirerProvider staticallyAccessibleRewirerProvider = new(logger);
+            GameInterceptors = new GameInterceptors(staticallyAccessibleRewirerProvider, logger);
         }
 
         private static void SetupPathEnvironmentVariable(ILogger logger)
@@ -49,10 +45,7 @@ namespace ShapezShifter
             }
 
             Disposed = true;
-            GameExtender.Dispose();
-            Logger.Info?.Log("Shapez Shifter shut down requested");
-            CallbackExtender.Dispose();
-            Logger.Info?.Log("Shapez Shifter shut down completed");
+            GameInterceptors.Dispose();
         }
     }
 
