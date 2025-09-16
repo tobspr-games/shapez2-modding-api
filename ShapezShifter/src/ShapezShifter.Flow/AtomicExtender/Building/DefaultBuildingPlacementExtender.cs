@@ -3,12 +3,12 @@ using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    public class DefaultPlacementRewirer : IShapeBuildingsPlacementInitiatorsRewirer,
-        IChainableRewirer<PlacementResult>
+    public class DefaultBuildingPlacementExtender : IShapeBuildingPlacementRewirers,
+        IChainableRewirer<BuildingPlacementResult>
     {
         private readonly IBuildingDefinition BuildingDefinition;
 
-        public DefaultPlacementRewirer(IBuildingDefinition buildingDefinition)
+        public DefaultBuildingPlacementExtender(IBuildingDefinition buildingDefinition)
         {
             BuildingDefinition = buildingDefinition;
         }
@@ -32,28 +32,16 @@ namespace ShapezShifter.Flow.Atomic
                 (ITutorialState)buildingInitiatorsParams.TutorialState,
                 buildingInitiatorsParams.ViewportLayerController);
 
-            IPlacementInitiator diagonalCutter = buildingsCreator.CreateDefaultPlacer(BuildingDefinition);
+            IPlacementInitiator placer = buildingsCreator.CreateDefaultPlacer(BuildingDefinition);
 
             PlacementInitiatorId placementInitiatorId = placementRegistry.RegisterInitiator(
                 $"{BuildingDefinition.Id.Name}Initiator",
-                diagonalCutter);
-            PlacementResult result = new(placementInitiatorId, BuildingDefinition);
+                placer);
+            BuildingPlacementResult result = new(placementInitiatorId, BuildingDefinition);
             _AfterExtensionApplied.Invoke(result);
         }
 
-        public IEvent<PlacementResult> AfterHijack => _AfterExtensionApplied;
-        private readonly MultiRegisterEvent<PlacementResult> _AfterExtensionApplied = new();
-    }
-
-    public readonly struct PlacementResult
-    {
-        public readonly PlacementInitiatorId InitiatorId;
-        public readonly IBuildingDefinition Building;
-
-        public PlacementResult(PlacementInitiatorId initiatorId, IBuildingDefinition building)
-        {
-            InitiatorId = initiatorId;
-            Building = building;
-        }
+        public IEvent<BuildingPlacementResult> AfterHijack => _AfterExtensionApplied;
+        private readonly MultiRegisterEvent<BuildingPlacementResult> _AfterExtensionApplied = new();
     }
 }

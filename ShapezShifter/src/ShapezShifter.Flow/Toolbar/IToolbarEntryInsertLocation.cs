@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Core.Collections.Scoped;
-using UnityEngine;
 
 namespace ShapezShifter.Flow.Toolbar
 {
@@ -79,28 +79,44 @@ namespace ShapezShifter.Flow.Toolbar
             this IToolbarElementLocator elementLocator, ToolbarData toolbarData)
         {
             int depth = elementLocator.Depth(toolbarData);
-            Debug.Log(depth);
 
             IParentToolbarElementData lastParent = toolbarData.RootToolbarElement;
 
+            using ScopedList<NavigatedToolbarElement> navigatedParents =
+                ScopedList<NavigatedToolbarElement>.Get();
+
+            navigatedParents.Add(new NavigatedToolbarElement(0, lastParent));
             for (int i = 0; i < depth - 1; i++)
             {
                 Index relativeIndex = elementLocator.IndexAtLevel(toolbarData, i);
-                if (!relativeIndex.IsFromEnd)
+                IEnumerable<IToolbarElementData> children =
+                    lastParent.Children.Where(x => x is not ToolbarSlotSeparator);
+                try
                 {
-                    lastParent = (IParentToolbarElementData)
-                        lastParent.Children.ElementAt(relativeIndex.Value);
+                    if (!relativeIndex.IsFromEnd)
+                    {
+                        lastParent = (IParentToolbarElementData)children.ElementAt(relativeIndex.Value);
+                    }
+                    else
+                    {
+                        lastParent = (IParentToolbarElementData)
+                            lastParent.Children.Reverse()
+                               .Where(x => x is not ToolbarSlotSeparator)
+                               .ElementAt(relativeIndex.Value - 1);
+                    }
+
+                    navigatedParents.Add(new NavigatedToolbarElement(relativeIndex, lastParent));
                 }
-                else
+                catch (Exception e)
                 {
-                    lastParent = (IParentToolbarElementData)
-                        lastParent.Children.Reverse().ElementAt(relativeIndex.Value - 1);
+                    throw ToolbarQueryExceptionUtils.CreateDetailedException(navigatedParents, relativeIndex, e);
                 }
             }
 
             return lastParent;
         }
     }
+
 
     public static class ToolbarInsertLocationExtensions
     {

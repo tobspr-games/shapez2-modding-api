@@ -4,12 +4,12 @@ using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    internal class GameScenarioRewirer : IGameScenarioRewirer, IChainableRewirer
+    internal class GameScenarioBuildingExtender : IGameScenarioRewirer, IChainableRewirer
     {
         private readonly ScenarioSelector ScenarioFilter;
         private readonly BuildingDefinitionGroupId GroupId;
 
-        public GameScenarioRewirer(ScenarioSelector scenarioFilter, BuildingDefinitionGroupId groupId)
+        public GameScenarioBuildingExtender(ScenarioSelector scenarioFilter, BuildingDefinitionGroupId groupId)
         {
             ScenarioFilter = scenarioFilter;
             GroupId = groupId;

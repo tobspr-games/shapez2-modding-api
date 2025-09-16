@@ -1,14 +1,14 @@
 using JetBrains.Annotations;
 
 [UsedImplicitly]
-public class AtomicPredictor<TOperationResult> : ShapeProcessingOutputPredictor
+public class AtomicBuildingPredictor<TOperationResult> : ShapeProcessingOutputPredictor
 {
     private readonly ShapeOperation<ShapeDefinition, TOperationResult> Operation;
     private readonly GetResultingShape ResultingShape;
 
     public delegate ShapeCollapseResult GetResultingShape(TOperationResult operationResult);
 
-    public AtomicPredictor(ShapeOperation<ShapeDefinition, TOperationResult> operation,
+    public AtomicBuildingPredictor(ShapeOperation<ShapeDefinition, TOperationResult> operation,
         GetResultingShape resultingShape)
     {
         Operation = operation;
@@ -20,15 +20,15 @@ public class AtomicPredictor<TOperationResult> : ShapeProcessingOutputPredictor
         SimulationPredictionOutputWriter outputWriter,
         IShapeRegistry shapes)
     {
-        if (!combination.TryPopShapeAtInput(0, out var shapeItem))
+        if (!combination.TryPopShapeAtInput(0, out ShapeItem shapeItem))
         {
             return;
         }
 
-        var shapeCutResult = Operation.Execute(shapeItem.Definition);
-        var rightSide = ResultingShape(shapeCutResult);
-        var id = rightSide?.Shape ?? ShapeId.Invalid;
-        var result = shapes.GetItem(id);
+        TOperationResult shapeCutResult = Operation.Execute(shapeItem.Definition);
+        ShapeCollapseResult rightSide = ResultingShape(shapeCutResult);
+        ShapeId id = rightSide?.Shape ?? ShapeId.Invalid;
+        ShapeItem result = shapes.GetItem(id);
         outputWriter.PushShapeAtOutput(0, result);
     }
 }

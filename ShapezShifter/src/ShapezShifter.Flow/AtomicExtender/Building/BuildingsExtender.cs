@@ -4,14 +4,14 @@ using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    public class BuildingsRewirer : IBuildingsRewirer, IChainableRewirer<BuildingDefinition>
+    public class BuildingsExtender : IBuildingsRewirer, IChainableRewirer<BuildingDefinition>
     {
         private readonly IBuildingBuilder BuildingBuilder;
         private readonly IBuildingGroupBuilder BuildingGroupBuilder;
         public IEvent<BuildingDefinition> AfterHijack => _AfterExtensionApplied;
         private readonly MultiRegisterEvent<BuildingDefinition> _AfterExtensionApplied = new();
 
-        public BuildingsRewirer(IBuildingBuilder buildingBuilder,
+        public BuildingsExtender(IBuildingBuilder buildingBuilder,
             IBuildingGroupBuilder buildingGroupBuilder)
         {
             BuildingBuilder = buildingBuilder;

@@ -4,12 +4,12 @@ using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    public class BuffablesRewirer<TBuffableConfig> : IBuffablesRewirer,
+    public class BuffablesExtender<TBuffableConfig> : IBuffablesRewirer,
         IChainableRewirer
     {
         private readonly TBuffableConfig BuffableConfig;
 
-        public BuffablesRewirer(TBuffableConfig buffableConfig)
+        public BuffablesExtender(TBuffableConfig buffableConfig)
         {
             BuffableConfig = buffableConfig;
         }

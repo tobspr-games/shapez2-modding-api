@@ -22,7 +22,7 @@ namespace ShapezShifter.Flow.Atomic
         private ScenarioSelector ScenarioFilter;
 
         private IToolbarEntryInsertLocation ToolbarEntryInsertLocation;
-        private IModulesData ModulesData;
+        private IBuildingModulesData ModulesData;
         private IBuildingBuilder BuildingBuilder;
         private IBuildingGroupBuilder BuildingGroupBuilder;
         private ISimulationExtender LazySimulationExtender;
@@ -97,13 +97,13 @@ namespace ShapezShifter.Flow.Atomic
 
         public IBuildingExtender WithAtomicShapeProcessingModules(ResearchSpeedId speedId, float processingDuration)
         {
-            ModulesData = new AtomicShapeProcessingModulesData(speedId, processingDuration);
+            ModulesData = new BuildingModulesData(speedId, processingDuration);
             return this;
         }
 
         public IBuildingExtender WithCustomModules(IBuildingModules buildingModules)
         {
-            ModulesData = new CustomModulesData(buildingModules);
+            ModulesData = new CustomBuildingsModulesData(buildingModules);
             return this;
         }
 
@@ -123,18 +123,18 @@ namespace ShapezShifter.Flow.Atomic
                 // Start the chain of extenders with the scenario extender. This also serves as a filter for only
                 // applying the other extenders if the scenario is part of the filter 
                 RewirerChainLink scenarioRewirer = RewirerChain
-                   .BeginRewiringWith(new GameScenarioRewirer(ScenarioFilter,
+                   .BeginRewiringWith(new GameScenarioBuildingExtender(ScenarioFilter,
                         BuildingGroupBuilder.GroupId));
 
                 // Then add the building group and building to the game buildings object
                 RewirerChainLink<BuildingDefinition> buildingRewirer =
-                    scenarioRewirer.ThenContinueRewiringWith(BuildBuildingPlacementExtender);
+                    scenarioRewirer.ThenContinueRewiringWith(BuildBuildingExtender);
 
                 // With the building added, create the simulation
                 RewirerChainLink simulationsRewirer = LazySimulationExtender.ContinueAfter(buildingRewirer);
 
                 // With the building, create the placement
-                RewirerChainLink<PlacementResult> placementRewirer =
+                RewirerChainLink<BuildingPlacementResult> placementRewirer =
                     buildingRewirer.ThenContinueRewiringWith(BuildDefaultPlacementExtender);
 
                 // And with the placement, create a toolbar entry
@@ -162,24 +162,24 @@ namespace ShapezShifter.Flow.Atomic
             }
         }
 
-        private BuildingsRewirer BuildBuildingPlacementExtender()
+        private BuildingsExtender BuildBuildingExtender()
         {
-            return new BuildingsRewirer(BuildingBuilder, BuildingGroupBuilder);
+            return new BuildingsExtender(BuildingBuilder, BuildingGroupBuilder);
         }
 
-        private DefaultPlacementRewirer BuildDefaultPlacementExtender(
+        private DefaultBuildingPlacementExtender BuildDefaultPlacementExtender(
             BuildingDefinition def)
         {
-            return new DefaultPlacementRewirer(def);
+            return new DefaultBuildingPlacementExtender(def);
         }
 
-        private Func<PlacementResult, ToolbarRewirer> BuildToolbarExtender(
+        private Func<BuildingPlacementResult, ToolbarRewirer> BuildToolbarExtender(
             IToolbarEntryInsertLocation entryInsertLocation)
         {
             return BuildToolbarExtenderFunc;
 
             ToolbarRewirer BuildToolbarExtenderFunc(
-                PlacementResult placementResult)
+                BuildingPlacementResult placementResult)
             {
                 PlacementInitiatorId placement = placementResult.InitiatorId;
                 IBuildingDefinitionGroup group = placementResult.Building.CustomData.Get<IBuildingDefinitionGroup>();
@@ -192,17 +192,17 @@ namespace ShapezShifter.Flow.Atomic
             }
         }
 
-        private Func<BuildingDefinition, SimulationRewirer<TSimulation, TState, TConfig>>
+        private Func<BuildingDefinition, BuildingSimulationExtender<TSimulation, TState, TConfig>>
             BuildSimulationExtender<TSimulation, TState, TConfig>(
                 IFactoryBuilder<TSimulation, TState, TConfig> factoryBuilder)
             where TSimulation : ISimulation where TState : class, ISimulationState, new()
         {
             return BuildToolbarExtenderFunc;
 
-            SimulationRewirer<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
+            BuildingSimulationExtender<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
                 BuildingDefinition buildingDefinition)
             {
-                return new SimulationRewirer<TSimulation, TState, TConfig>(ScenarioFilter,
+                return new BuildingSimulationExtender<TSimulation, TState, TConfig>(ScenarioFilter,
                     buildingDefinition.Id,
                     factoryBuilder);
             }
@@ -211,7 +211,7 @@ namespace ShapezShifter.Flow.Atomic
 
         private IChainableRewirer BuildModulesExtender(BuildingDefinition buildingDefinition)
         {
-            return new ModulesRewirer(buildingDefinition, ModulesData);
+            return new BuildingModulesExtender(buildingDefinition, ModulesData);
         }
 
         private class TypedSimulationExtender<TSimulation, TState, TConfig> : ISimulationExtender
@@ -233,17 +233,17 @@ namespace ShapezShifter.Flow.Atomic
                 return rewirerChainLink.ThenContinueRewiringWith(BuildToolbarExtenderFunc)
                    .ThenContinueRewiringWith(BuildBuffablesExtender);
 
-                SimulationRewirer<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
+                BuildingSimulationExtender<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
                     BuildingDefinition buildingDefinition)
                 {
-                    return new SimulationRewirer<TSimulation, TState, TConfig>(ScenarioSelector,
+                    return new BuildingSimulationExtender<TSimulation, TState, TConfig>(ScenarioSelector,
                         buildingDefinition.Id,
                         FactoryBuilder);
                 }
 
                 IChainableRewirer BuildBuffablesExtender(TConfig config)
                 {
-                    return new BuffablesRewirer<TConfig>(config);
+                    return new BuffablesExtender<TConfig>(config);
                 }
             }
         }
@@ -321,7 +321,6 @@ namespace ShapezShifter.Flow.Atomic
 
     public interface IAtomicBuildingExtender
     {
-        IBuildingExtender WithAtomicShapeProcessingModules(ResearchSpeedId speedId, float processingDuration);
         IBuildingExtender WithCustomModules(IBuildingModules buildingModules);
     }
 

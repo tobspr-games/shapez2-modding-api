@@ -35,9 +35,4 @@ namespace ShapezShifter.Hijack
             InjectBuildingsModuleProvidersHook.Dispose();
         }
     }
-
-    public interface IBuildingModulesRewirer : IRewirer
-    {
-        void AddModules(BuildingsModulesLookup modulesLookup);
-    }
 }

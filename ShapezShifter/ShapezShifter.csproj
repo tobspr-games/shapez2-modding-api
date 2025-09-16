@@ -75,6 +75,13 @@
             <HintPath>$(SPZ2_PATH)\Game.Core.dll</HintPath>
             <Private>False</Private>
         </Reference>
+
+        <Reference Include="Game.Content">
+            <HintPath>$(SPZ2_PATH)\Game.Content.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        
         <Reference Include="Game.Content.Features">
             <HintPath>$(SPZ2_PATH)\Game.Content.Features.dll</HintPath>
             <Private>False</Private>
@@ -149,7 +156,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="src\ShapezShifter.Hijack\GameHijackers\Islands\"/>
         <Folder Include="src\ShapezShifter.Hijack\Utilities\"/>
     </ItemGroup>
 

@@ -3,7 +3,7 @@ using Game.Core.Coordinates;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    public static class Connectors
+    public static class BuildingConnectors
     {
         public static ISingleTileConnectorDataBuilder SingleTile()
         {

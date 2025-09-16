@@ -4,13 +4,13 @@ using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    public class ModulesRewirer : IBuildingModulesRewirer, IChainableRewirer
+    public class BuildingModulesExtender : IBuildingModulesRewirer, IChainableRewirer
     {
         private readonly IBuildingDefinition BuildingDefinition;
-        private readonly IModulesData Data;
+        private readonly IBuildingModulesData Data;
 
-        public ModulesRewirer(IBuildingDefinition buildingDefinition,
-            IModulesData data)
+        public BuildingModulesExtender(IBuildingDefinition buildingDefinition,
+            IBuildingModulesData data)
         {
             BuildingDefinition = buildingDefinition;
             Data = data;
@@ -25,10 +25,11 @@ namespace ShapezShifter.Flow.Atomic
         {
             IBuildingModules buildingModules = Data switch
             {
-                AtomicShapeProcessingModulesData processingModulesData => new ItemSimulationBuildingModuleDataProvider(
-                    processingModulesData.SpeedId,
-                    processingModulesData.InitialProcessingDuration),
-                CustomModulesData customModulesData => customModulesData.Modules,
+                BuildingModulesData processingModulesData => new
+                    ItemSimulationBuildingModuleDataProvider(
+                        processingModulesData.SpeedId,
+                        processingModulesData.InitialProcessingDuration),
+                CustomBuildingsModulesData customModulesData => customModulesData.Modules,
                 _ => throw new Exception()
             };
 
