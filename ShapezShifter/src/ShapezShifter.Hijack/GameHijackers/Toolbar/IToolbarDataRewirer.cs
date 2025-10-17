@@ -1,3 +1,5 @@
+using Core.Logging;
+
 namespace ShapezShifter.Hijack
 {
     /// <summary>

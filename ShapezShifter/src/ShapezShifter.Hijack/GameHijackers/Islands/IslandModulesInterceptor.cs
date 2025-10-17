@@ -14,12 +14,12 @@ namespace ShapezShifter.Hijack
         {
             RewirerProvider = rewirerProvider;
             InjectIslandsModuleProvidersHook = DetourHelper
-               .CreatePostfixHook<GameCore, IslandsModulesLookup>((core, lookup) =>
+               .CreatePostfixHook<GameSessionOrchestrator, IslandsModulesLookup>((core, lookup) =>
                         core.InjectIslandsModuleProviders(lookup),
                     Postfix);
         }
 
-        private void Postfix(GameCore gameCore, IslandsModulesLookup modulesLookup)
+        private void Postfix(GameSessionOrchestrator gameCore, IslandsModulesLookup modulesLookup)
         {
             IEnumerable<IIslandModulesRewirer> islandModulesRewirers =
                 RewirerProvider.RewirersOfType<IIslandModulesRewirer>();

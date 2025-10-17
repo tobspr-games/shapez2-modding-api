@@ -81,7 +81,7 @@
             <Private>False</Private>
         </Reference>
 
-        
+
         <Reference Include="Game.Content.Features">
             <HintPath>$(SPZ2_PATH)\Game.Content.Features.dll</HintPath>
             <Private>False</Private>

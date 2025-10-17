@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace ShapezShifter.Flow.Toolbar
 {
@@ -18,14 +19,19 @@ namespace ShapezShifter.Flow.Toolbar
 
     public class RootElementLocator : IToolbarElementLocator
     {
-        public Index IndexAtLevel(ToolbarData toolbarData, int level)
+        public Index IndexAtLevel(int level)
         {
             return level != 0 ? throw new Exception() : 0;
         }
 
-        public int Depth(ToolbarData toolbarData)
+        public int Depth()
         {
             return 0;
+        }
+
+        public override string ToString()
+        {
+            return "Root";
         }
     }
 
@@ -40,9 +46,9 @@ namespace ShapezShifter.Flow.Toolbar
             Index = index;
         }
 
-        public Index IndexAtLevel(ToolbarData toolbarData, int level)
+        public Index IndexAtLevel(int level)
         {
-            int maxLevel = Depth(toolbarData) - 1;
+            int maxLevel = Depth() - 1;
             if (level > maxLevel)
             {
                 throw new Exception();
@@ -50,15 +56,22 @@ namespace ShapezShifter.Flow.Toolbar
 
             if (level < maxLevel)
             {
-                return ParentLocator.IndexAtLevel(toolbarData, level);
+                return ParentLocator.IndexAtLevel(level);
             }
 
             return Index;
         }
 
-        public int Depth(ToolbarData toolbarData)
+        public int Depth()
         {
-            return ParentLocator.Depth(toolbarData) + 1;
+            return ParentLocator.Depth() + 1;
+        }
+
+        public override string ToString()
+        {
+            return $"{ParentLocator}\n" +
+                   new string(Enumerable.Repeat('\t', Depth()).ToArray()) +
+                   $"{Index}";
         }
     }
 }

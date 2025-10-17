@@ -11,7 +11,7 @@ namespace ShapezShifter.Kit
     /// </remarks>
     public class AssetBundleHelper : IDisposable
     {
-        public static AssetBundleHelper CreateForAssetBundleEmbeddedWithMod<TMod>(string relativePath = "Resources")
+        public static AssetBundleHelper CreateForAssetBundleEmbeddedWithMod<TMod>(string relativePath)
             where TMod : IMod
         {
             return new AssetBundleHelper(Path.Combine(ModDirectoryLocator.GetDirectoryLocation<TMod>(), relativePath));

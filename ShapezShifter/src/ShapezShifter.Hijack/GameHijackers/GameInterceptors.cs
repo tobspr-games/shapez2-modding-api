@@ -37,6 +37,8 @@ namespace ShapezShifter.Hijack
             ToolbarInterceptor.Dispose();
             SimulationSystemsInterceptor.Dispose();
             BuffablesInterceptor.Dispose();
+            IslandsInterceptor.Dispose();
+            IslandModulesInterceptor.Dispose();
         }
     }
 }

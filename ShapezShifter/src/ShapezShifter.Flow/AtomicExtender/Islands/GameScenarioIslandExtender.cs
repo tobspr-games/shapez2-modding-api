@@ -1,17 +1,20 @@
-using System.Linq;
 using Core.Events;
+using ShapezShifter.Flow.Research;
 using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
 {
-    internal class GameScenarioIslandRewirer : IGameScenarioRewirer, IChainableRewirer
+    internal class GameScenarioIslandExtender : IGameScenarioRewirer, IChainableRewirer
     {
         private readonly ScenarioSelector ScenarioFilter;
+        private readonly IIslandResearchProgressionExtender ProgressionExtender;
         private readonly IslandDefinitionGroupId GroupId;
 
-        public GameScenarioIslandRewirer(ScenarioSelector scenarioFilter, IslandDefinitionGroupId groupId)
+        public GameScenarioIslandExtender(ScenarioSelector scenarioFilter,
+            IIslandResearchProgressionExtender progressionExtender, IslandDefinitionGroupId groupId)
         {
             ScenarioFilter = scenarioFilter;
+            ProgressionExtender = progressionExtender;
             GroupId = groupId;
         }
 
@@ -22,9 +25,7 @@ namespace ShapezShifter.Flow.Atomic
                 return gameScenario;
             }
 
-            gameScenario.Progression.Levels[^1].Rewards = gameScenario.Progression.Levels[^1]
-               .Rewards.Append(new ResearchRewardIslandGroup(new SerializedResearchRewardIslandGroup(GroupId.Name)))
-               .ToList();
+            ProgressionExtender.ExtendResearch(gameScenario.Progression, GroupId);
             _AfterExtensionApplied.Invoke();
             return gameScenario;
         }

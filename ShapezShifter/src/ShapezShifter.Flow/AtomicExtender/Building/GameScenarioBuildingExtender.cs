@@ -1,5 +1,5 @@
-using System.Linq;
 using Core.Events;
+using ShapezShifter.Flow.Research;
 using ShapezShifter.Hijack;
 
 namespace ShapezShifter.Flow.Atomic
@@ -7,11 +7,14 @@ namespace ShapezShifter.Flow.Atomic
     internal class GameScenarioBuildingExtender : IGameScenarioRewirer, IChainableRewirer
     {
         private readonly ScenarioSelector ScenarioFilter;
+        private readonly IBuildingResearchProgressionExtender ProgressionExtender;
         private readonly BuildingDefinitionGroupId GroupId;
 
-        public GameScenarioBuildingExtender(ScenarioSelector scenarioFilter, BuildingDefinitionGroupId groupId)
+        public GameScenarioBuildingExtender(ScenarioSelector scenarioFilter,
+            IBuildingResearchProgressionExtender progressionExtender, BuildingDefinitionGroupId groupId)
         {
             ScenarioFilter = scenarioFilter;
+            ProgressionExtender = progressionExtender;
             GroupId = groupId;
         }
 
@@ -22,9 +25,7 @@ namespace ShapezShifter.Flow.Atomic
                 return gameScenario;
             }
 
-            gameScenario.Progression.Levels[^1].Rewards = gameScenario.Progression.Levels[^1]
-               .Rewards.Append(new ResearchRewardBuildingGroup(GroupId))
-               .ToList();
+            ProgressionExtender.ExtendResearch(gameScenario.Progression, GroupId);
             _AfterExtensionApplied.Invoke();
             return gameScenario;
         }

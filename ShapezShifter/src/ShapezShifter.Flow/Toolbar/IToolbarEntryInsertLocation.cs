@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Collections.Scoped;
+using UnityEngine;
 
 namespace ShapezShifter.Flow.Toolbar
 {
@@ -38,13 +39,18 @@ namespace ShapezShifter.Flow.Toolbar
                 IToolbarElementData elementData)
             {
                 IParentToolbarElementData parent = ElementLocator.FindElementParent(toolbarData);
-                Index relativeIndex = ElementLocator.LeafIndex(toolbarData);
+                Index relativeIndex = ElementLocator.LeafIndex();
 
                 int absoluteIndex = relativeIndex.IsFromEnd
                     ? parent.Children.Count() - relativeIndex.Value
                     : relativeIndex.Value;
 
                 parent.InsertAtIndex(elementData, absoluteIndex);
+            }
+
+            public override string ToString()
+            {
+                return $"Before \n{ElementLocator}";
             }
         }
 
@@ -61,14 +67,21 @@ namespace ShapezShifter.Flow.Toolbar
                 IToolbarElementData elementData)
             {
                 IParentToolbarElementData parent = ElementLocator.FindElementParent(toolbarData);
-                Index relativeIndex = ElementLocator.LeafIndex(toolbarData);
+                Index relativeIndex = ElementLocator.LeafIndex();
 
                 int absoluteIndex = relativeIndex.IsFromEnd
                     ? parent.Children.Count() - relativeIndex.Value
                     : relativeIndex.Value;
 
                 absoluteIndex++;
+
+                Debug.Log("Inserting");
                 parent.InsertAtIndex(elementData, absoluteIndex);
+            }
+
+            public override string ToString()
+            {
+                return $"After \n{ElementLocator}";
             }
         }
     }
@@ -78,7 +91,7 @@ namespace ShapezShifter.Flow.Toolbar
         public static IParentToolbarElementData FindElementParent(
             this IToolbarElementLocator elementLocator, ToolbarData toolbarData)
         {
-            int depth = elementLocator.Depth(toolbarData);
+            int depth = elementLocator.Depth();
 
             IParentToolbarElementData lastParent = toolbarData.RootToolbarElement;
 
@@ -88,7 +101,7 @@ namespace ShapezShifter.Flow.Toolbar
             navigatedParents.Add(new NavigatedToolbarElement(0, lastParent));
             for (int i = 0; i < depth - 1; i++)
             {
-                Index relativeIndex = elementLocator.IndexAtLevel(toolbarData, i);
+                Index relativeIndex = elementLocator.IndexAtLevel(i);
                 IEnumerable<IToolbarElementData> children =
                     lastParent.Children.Where(x => x is not ToolbarSlotSeparator);
                 try

@@ -1,8 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
-using Core.Logging;
 using JetBrains.Annotations;
 using ShapezShifter.Hijack;
+using UnityEngine;
+using ILogger = Core.Logging.ILogger;
 
 [assembly: InternalsVisibleTo("ShapezShifterTests")]
 
@@ -30,6 +31,11 @@ namespace ShapezShifter
 
         private static void SetupPathEnvironmentVariable(ILogger logger)
         {
+            if (Application.isEditor || GameEnvironment.IsSafeMode)
+            {
+                return;
+            }
+
             const string environmentVariable = "SPZ2_SHIFTER";
             string path = typeof(Main).Assembly.Location;
             logger.Info?.Log($"Setting environment variable {environmentVariable} to {path}");

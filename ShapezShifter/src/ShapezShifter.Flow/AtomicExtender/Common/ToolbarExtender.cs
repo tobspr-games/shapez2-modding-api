@@ -34,6 +34,8 @@ namespace ShapezShifter.Flow.Atomic
                 Icon);
 
             EntryInsertLocation.AddEntry(toolbarData, toolbarElement);
+
+
             _AfterExtensionApplied.Invoke(toolbarElement);
             return toolbarData;
         }

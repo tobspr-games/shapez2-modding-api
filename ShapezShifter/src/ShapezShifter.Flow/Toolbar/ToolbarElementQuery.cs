@@ -4,13 +4,13 @@ namespace ShapezShifter.Flow.Toolbar
 {
     public interface IToolbarElementLocator
     {
-        public Index IndexAtLevel(ToolbarData toolbarData, int level);
+        public Index IndexAtLevel(int level);
 
-        public int Depth(ToolbarData toolbarData);
+        public int Depth();
 
-        public Index LeafIndex(ToolbarData toolbarData)
+        public Index LeafIndex()
         {
-            return IndexAtLevel(toolbarData, Depth(toolbarData) - 1);
+            return IndexAtLevel(Depth() - 1);
         }
     }
 }

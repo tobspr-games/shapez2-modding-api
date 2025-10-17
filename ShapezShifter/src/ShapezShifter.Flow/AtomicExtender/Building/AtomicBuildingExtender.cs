@@ -1,5 +1,8 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Game.Core.Simulation;
+using JetBrains.Annotations;
+using ShapezShifter.Flow.Research;
 using ShapezShifter.Flow.Toolbar;
 using ShapezShifter.Hijack;
 
@@ -14,7 +17,7 @@ namespace ShapezShifter.Flow.Atomic
         IDefinedSimulatableBuildingExtender,
         IDefinedSimulatablePlaceableBuildingExtender,
         IAtomicBuildingExtender,
-        IBuildingExtender
+        IBuildingExtender, IDefinedUnlockableBuildingExtender
     {
         // If each interface would have a specialized implementor, these fields could become
         // read-only. However that would create a lot of extra boiler-plate code
@@ -26,6 +29,8 @@ namespace ShapezShifter.Flow.Atomic
         private IBuildingBuilder BuildingBuilder;
         private IBuildingGroupBuilder BuildingGroupBuilder;
         private ISimulationExtender LazySimulationExtender;
+
+        private IBuildingResearchProgressionExtender ProgressionExtender;
 
         public IScenarioSelectiveBuildingExtender SpecificScenarios(ScenarioSelector scenarioFilter)
         {
@@ -52,15 +57,26 @@ namespace ShapezShifter.Flow.Atomic
             return this;
         }
 
-        IDefinedPlaceableBuildingExtender IDefinedBuildingExtender.WithDefaultPlacement()
-        {
-            return this;
-        }
 
         IDefinedPlaceableAccessibleBuildingExtender IDefinedPlaceableBuildingExtender.InToolbar(
             IToolbarEntryInsertLocation toolbarEntryInsertLocation)
         {
             ToolbarEntryInsertLocation = toolbarEntryInsertLocation;
+            return this;
+        }
+
+
+        public IAtomicBuildingExtender WithSimulation
+            <TSimulation>(IFactoryBuilder<TSimulation> factoryBuilder)
+            where TSimulation : ISimulation
+        {
+            LazySimulationExtender =
+                new TypedSimulationExtender<TSimulation>(factoryBuilder);
+            return this;
+        }
+
+        IDefinedPlaceableBuildingExtender IDefinedUnlockableBuildingExtender.WithDefaultPlacement()
+        {
             return this;
         }
 
@@ -70,7 +86,7 @@ namespace ShapezShifter.Flow.Atomic
             where TSimulation : ISimulation where TState : class, ISimulationState, new()
         {
             LazySimulationExtender =
-                new TypedSimulationExtender<TSimulation, TState, TConfig>(ScenarioFilter, factoryBuilder);
+                new TypedSimulationExtender<TSimulation, TState, TConfig>(factoryBuilder);
             return this;
         }
 
@@ -124,6 +140,7 @@ namespace ShapezShifter.Flow.Atomic
                 // applying the other extenders if the scenario is part of the filter 
                 RewirerChainLink scenarioRewirer = RewirerChain
                    .BeginRewiringWith(new GameScenarioBuildingExtender(ScenarioFilter,
+                        ProgressionExtender,
                         BuildingGroupBuilder.GroupId));
 
                 // Then add the building group and building to the game buildings object
@@ -202,8 +219,7 @@ namespace ShapezShifter.Flow.Atomic
             BuildingSimulationExtender<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
                 BuildingDefinition buildingDefinition)
             {
-                return new BuildingSimulationExtender<TSimulation, TState, TConfig>(ScenarioFilter,
-                    buildingDefinition.Id,
+                return new BuildingSimulationExtender<TSimulation, TState, TConfig>(buildingDefinition.Id,
                     factoryBuilder);
             }
         }
@@ -214,17 +230,38 @@ namespace ShapezShifter.Flow.Atomic
             return new BuildingModulesExtender(buildingDefinition, ModulesData);
         }
 
+        private class TypedSimulationExtender<TSimulation> : ISimulationExtender
+            where TSimulation : ISimulation
+        {
+            private readonly IFactoryBuilder<TSimulation> FactoryBuilder;
+
+            public TypedSimulationExtender(
+                IFactoryBuilder<TSimulation> factoryBuilder)
+            {
+                FactoryBuilder = factoryBuilder;
+            }
+
+            public RewirerChainLink ContinueAfter(RewirerChainLink<BuildingDefinition> rewirerChainLink)
+            {
+                return rewirerChainLink.ThenContinueRewiringWith(BuildToolbarExtenderFunc);
+
+                BuildingSimulationExtender<TSimulation> BuildToolbarExtenderFunc(
+                    BuildingDefinition buildingDefinition)
+                {
+                    return new BuildingSimulationExtender<TSimulation>(buildingDefinition.Id,
+                        FactoryBuilder);
+                }
+            }
+        }
+
         private class TypedSimulationExtender<TSimulation, TState, TConfig> : ISimulationExtender
             where TSimulation : ISimulation where TState : class, ISimulationState, new()
 
         {
-            private readonly ScenarioSelector ScenarioSelector;
             private readonly IFactoryBuilder<TSimulation, TState, TConfig> FactoryBuilder;
 
-            public TypedSimulationExtender(ScenarioSelector scenarioSelector,
-                IFactoryBuilder<TSimulation, TState, TConfig> factoryBuilder)
+            public TypedSimulationExtender(IFactoryBuilder<TSimulation, TState, TConfig> factoryBuilder)
             {
-                ScenarioSelector = scenarioSelector;
                 FactoryBuilder = factoryBuilder;
             }
 
@@ -236,8 +273,7 @@ namespace ShapezShifter.Flow.Atomic
                 BuildingSimulationExtender<TSimulation, TState, TConfig> BuildToolbarExtenderFunc(
                     BuildingDefinition buildingDefinition)
                 {
-                    return new BuildingSimulationExtender<TSimulation, TState, TConfig>(ScenarioSelector,
-                        buildingDefinition.Id,
+                    return new BuildingSimulationExtender<TSimulation, TState, TConfig>(buildingDefinition.Id,
                         FactoryBuilder);
                 }
 
@@ -251,6 +287,34 @@ namespace ShapezShifter.Flow.Atomic
         private interface ISimulationExtender
         {
             RewirerChainLink ContinueAfter(RewirerChainLink<BuildingDefinition> rewirerChainLink);
+        }
+
+        public IDefinedUnlockableBuildingExtender UnlockedAtMilestone(IMilestoneSelector milestoneSelector)
+        {
+            ProgressionExtender = new UnlockBuildingWithMilestoneResearchProgressionExtender(milestoneSelector);
+            return this;
+        }
+
+        public IDefinedUnlockableBuildingExtender UnlockedWithNewSideUpgrade(
+            IPresentableUnlockableSideUpgradeBuilder sideUpgradeBuilder)
+        {
+            ProgressionExtender = new UnlockBuildingWithNewSideUpgradeResearchProgressionExtender(sideUpgradeBuilder);
+            return this;
+        }
+
+        public IDefinedUnlockableBuildingExtender UnlockedWithExistingSideUpgrade(
+            ISideUpgradeSelector sideUpgradeSelector)
+        {
+            ProgressionExtender =
+                new UnlockBuildingWithExistingSideUpgradeResearchProgressionExtender(sideUpgradeSelector);
+            return this;
+        }
+
+        private enum ResearchProgression
+        {
+            Milestone,
+            NewSideUpgrade,
+            ExistingSideUpgrade
         }
     }
 
@@ -271,6 +335,18 @@ namespace ShapezShifter.Flow.Atomic
 
     // Scenario -> Building
     public interface IDefinedBuildingExtender
+    {
+        IDefinedUnlockableBuildingExtender UnlockedAtMilestone(IMilestoneSelector milestoneSelector);
+
+        IDefinedUnlockableBuildingExtender UnlockedWithNewSideUpgrade(
+            IPresentableUnlockableSideUpgradeBuilder sideUpgradeBuilder);
+
+        IDefinedUnlockableBuildingExtender UnlockedWithExistingSideUpgrade(ISideUpgradeSelector sideUpgradeSelector);
+    }
+
+    // Scenario -> Building -> Research
+
+    public interface IDefinedUnlockableBuildingExtender
     {
         IDefinedPlaceableBuildingExtender WithDefaultPlacement();
 
@@ -321,6 +397,7 @@ namespace ShapezShifter.Flow.Atomic
 
     public interface IAtomicBuildingExtender
     {
+        IBuildingExtender WithAtomicShapeProcessingModules(ResearchSpeedId speedId, float processingDuration);
         IBuildingExtender WithCustomModules(IBuildingModules buildingModules);
     }
 
