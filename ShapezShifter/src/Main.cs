@@ -31,7 +31,7 @@ namespace ShapezShifter
 
         private static void SetupPathEnvironmentVariable(ILogger logger)
         {
-            if (Application.isEditor || GameEnvironment.IsSafeMode)
+            if (Application.isEditor || GameEnvironment.ShouldSetModFriendlyEnvironmentPath)
             {
                 return;
             }
