@@ -1,23 +1,32 @@
-### Requirements
+We recommend using and contributing to the Shapez Shifter project for sharing common mod functionality. The Shapez Shifter API is responsible for:
 
-- Shapez2 Alpha 9
-- Visual Studio (recommended) or Rider or VSCode
+- Facilitating methods patching
+- Offering an API that sits in-between the shapez 2 source code and the mods. This allows supporting a backwards-compatible API where mods have compatibility with the game for longer and source changes do not immediately break existing mods
+- Offering meaningful methods for adding extra content to the game
 
-> For MacOS users, patching with either MonoMod, HarmonyX, MelonLoader, tModLoader, BepInEx, require running the game with Rosetta
 
-### Installation
 
-The projects is configured for very easy installation with Visual Studio and fairly straightforward with other IDEs. It only requires two environment variables:
+## 📏 Architecture
 
-1. SPZ2_PATH: Pointing to the game folder containing the managed assemblies
-2. SPZ2_PERSISTENT: Should point to Unity's `Application.persistentDataPath`
+The Shapez Shifter API is split in three layers: `Sharp Detours`, `Hijack`, and `Flow`:
 
-On Windows, these are automatically set when you play the game. You can also add them manually
+### 🏹 Sharp Detours
 
-On Unix, these must be set somehow. My recommendation for MacOS is using the `.zprofile` to export the variables and then opening Visual Studio from the console.
+The `Sharp Detour` layer adds safety on top of `MonoMod.RuntimeDetours` allowing you to hook into any method or field in the game and modify it in any preferred way. Methods can be replaced, deleted, prefixed or postfixed. This makes this layer the most powerful and close to source one, but requires a deeper understanding of the game structure. It is also not recommended to be used to remain compatible with other mods.
 
-After these variables are set, it is as easy as building the solution and the patchers should already be available in the game. To actually change something, check out the [mods samples](https://github.com/tobspr-games/shapez2-mod-samples)
+### 💻 Hijack
 
-### Disclaimer
+The `Hijack` layer allows you to intercept and modify game structures and behaviors. It sits directly on top of the low-level Sharp Detour hooks and exposes a structured way to take control of game logic.
 
-This API is only a proof of concept. We plan on creating an extended API and 99% of these will probably change. They lack dependency handling, unloading, packing and much more. 
+Think of it as a two-step process:
+
+1. **Intercept**: catch existing game execution, objects or events mid-flight.
+2. **Rewire**: reroute, modify or extend the intercepted behavior or data for your purposes
+
+### 🌊 Flow
+
+The `Flow` layer offers a convenient and refined way to easily setup common features such as adding a new building (including entity, rendering, toolbar, research, placement, simulation). The layer is the easiest one to use, but greatly limits what is possible to do because many assumptions are made to provide a meaningful API
+
+### 🪛 Kit
+
+There is an extra namespace `Kit` present in the Shapez Shifter API separated from the architecture layers. It contains miscellaneous convenience on top of the game code and methods related to modding
