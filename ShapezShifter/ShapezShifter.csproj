@@ -1,0 +1,162 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>disable</Nullable>
+        <RunPostBuildEvent>Always</RunPostBuildEvent>
+        <LangVersion>9</LangVersion>
+
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputPath>$(SPZ2_PERSISTENT)\mods\ShapezShifter</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <Target Name="SteamPublish">
+        <Exec Command="echo Executing Steam Publishing Bash Commands"/>
+        <Exec Command='sh .\Steam\SteamPublish.sh "$(OutputPath)'/>
+        <Exec Command="echo Done!"/>
+    </Target>
+
+
+    <ItemGroup>
+        <PackageReference Include="AssimpNet" Version="4.1.0"/>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="25.3.0"/>
+        <PackageReference Include="NUnit" Version="3.14.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="SPZGameAssembly">
+            <HintPath>$(SPZ2_PATH)\SPZGameAssembly.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Map">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Map.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Map.Model">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Map.Model.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Coordinates">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Coordinates.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Rendering">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Rendering.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.ImageConversionModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Unity.Collections">
+            <HintPath>$(SPZ2_PATH)\Unity.Collections.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Unity.Mathematics">
+            <HintPath>$(SPZ2_PATH)\Unity.Mathematics.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Simulation">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Simulation.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core">
+            <HintPath>$(SPZ2_PATH)\Game.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Content">
+            <HintPath>$(SPZ2_PATH)\Game.Content.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+
+        <Reference Include="Game.Content.Features">
+            <HintPath>$(SPZ2_PATH)\Game.Content.Features.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Modding">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Core.Modding">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Modding.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Game.Orchestration">
+            <HintPath>$(SPZ2_PATH)\Game.Orchestration.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Core.Localization">
+            <HintPath>$(SPZ2_PATH)\Core.Localization.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Core.Map.Simulation">
+            <HintPath>$(SPZ2_PATH)\Game.Core.Map.Simulation.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Game.Interaction">
+            <HintPath>$(SPZ2_PATH)\Game.Interaction.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Core">
+            <HintPath>$(SPZ2_PATH)\Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="Toolbar">
+            <HintPath>$(SPZ2_PATH)\Toolbar.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="UnityEngine.AssetBundleModule">
+            <HintPath>$(SPZ2_PATH)\UnityEngine.AssetBundleModule.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PublicizeAll>true</PublicizeAll>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <DoNotPublicize Include="System.Collections.Generic:Dictionary" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="SPZGameAssembly:BeltLaneRenderingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Core.Coordinates" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="SPZGameAssembly:BuildingDefinition" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Orchestration:ParentToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <DoNotPublicize Include="Game.Orchestration:RootToolbarElementData" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <None Update="meta.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="src\ShapezShifter.Hijack\Utilities\"/>
+    </ItemGroup>
+
+</Project>

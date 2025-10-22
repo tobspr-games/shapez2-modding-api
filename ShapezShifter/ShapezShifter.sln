@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifter", "ShapezShifter.csproj", "{9A691585-56CB-472A-8986-2C6256149DDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterTests", "..\ShapezShifterTests\ShapezShifterTests.csproj", "{AFBBBA2B-D696-4050-A6E7-D04FBC832B86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterEnclosedTypes", "..\ShapezShifterEnclosedTypes\ShapezShifterEnclosedTypes.csproj", "{04100994-7195-474E-81D4-143166C5003C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssimpNet", "..\AssimpNet\AssimpNet\AssimpNet.csproj", "{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A691585-56CB-472A-8986-2C6256149DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A691585-56CB-472A-8986-2C6256149DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A691585-56CB-472A-8986-2C6256149DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A691585-56CB-472A-8986-2C6256149DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFBBBA2B-D696-4050-A6E7-D04FBC832B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFBBBA2B-D696-4050-A6E7-D04FBC832B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFBBBA2B-D696-4050-A6E7-D04FBC832B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFBBBA2B-D696-4050-A6E7-D04FBC832B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04100994-7195-474E-81D4-143166C5003C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04100994-7195-474E-81D4-143166C5003C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D7C3926-D075-4561-8DD2-CD35BA991668}
+	EndGlobalSection
+EndGlobal

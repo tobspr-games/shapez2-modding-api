@@ -1,0 +1,10 @@
+"workshopitem"
+{
+    "appid" "2162800"
+    "publishedfileid" "3591335975"
+    "contentfolder" "${CONTENT_PATH}"
+    "previewfile" "${PREVIEW_IMG}"
+    "visibility" "0"
+    "title" "AssimpNet"
+    "description" "A .NET Wrapper for the Open Asset Import (Assimp) library. The library is able to import dozens of different 3D model formats (e.g. OBJ, FBX, GLTF, Collada) and export to several formats (e.g. OBJ, GLTF, Collada). This release targets version 4.1.0 of the native library."
+}
