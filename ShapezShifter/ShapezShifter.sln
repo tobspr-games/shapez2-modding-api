@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterTests", "..\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapezShifterEnclosedTypes", "..\ShapezShifterEnclosedTypes\ShapezShifterEnclosedTypes.csproj", "{04100994-7195-474E-81D4-143166C5003C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssimpNet", "..\AssimpNet\AssimpNet\AssimpNet.csproj", "{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{04100994-7195-474E-81D4-143166C5003C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04100994-7195-474E-81D4-143166C5003C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AEEDF80-BDDA-4B23-A6D0-6CF5840F6F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
