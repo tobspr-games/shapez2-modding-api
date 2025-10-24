@@ -14,14 +14,13 @@ namespace ShapezShifter.Kit
         {
             using AssimpContext importer = new();
 
-            //This is how we add a logging callback 
             LogStream logStream = new(delegate(string msg, string _) { Debugging.Logger.Info?.Log(msg); });
             logStream.Attach();
 
-            Scene model = importer.ImportFile(file,
+            Scene scene = importer.ImportFile(file,
                 PostProcessPreset.TargetRealTimeMaximumQuality);
 
-            return AssimpToUnityMeshConverter.ConvertStaticMesh(model.Meshes.Single());
+            return AssimpToUnityMeshConverter.ConvertStaticMesh(scene.Meshes.Single());
         }
     }
 }
