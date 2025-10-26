@@ -1,5 +1,6 @@
 using Core.Events;
 using ShapezShifter.Hijack;
+using Unity.Core.Logging;
 
 namespace ShapezShifter.Flow.Atomic
 {
@@ -30,7 +31,8 @@ namespace ShapezShifter.Flow.Atomic
                 buildingInitiatorsParams.BuildingsModules,
                 buildingInitiatorsParams.PipetteMap,
                 (ITutorialState)buildingInitiatorsParams.TutorialState,
-                buildingInitiatorsParams.ViewportLayerController);
+                buildingInitiatorsParams.ViewportLayerController,
+                new UnityLogger());
 
             IPlacementInitiator placer = buildingsCreator.CreateDefaultPlacer(BuildingDefinition);
 

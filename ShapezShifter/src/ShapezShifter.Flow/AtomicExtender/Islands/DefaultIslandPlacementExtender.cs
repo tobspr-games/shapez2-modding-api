@@ -1,5 +1,6 @@
 using Core.Events;
 using ShapezShifter.Hijack;
+using Unity.Core.Logging;
 
 namespace ShapezShifter.Flow.Atomic
 {
@@ -30,7 +31,8 @@ namespace ShapezShifter.Flow.Atomic
                 (ITutorialState)islandInitiatorsParams.TutorialState,
                 islandInitiatorsParams.ChunkLimitManager,
                 islandInitiatorsParams.ViewportLayersController,
-                islandInitiatorsParams.RailColorRegistry);
+                islandInitiatorsParams.RailColorRegistry,
+                new UnityLogger());
 
             IPlacementInitiator placer = islandsPlacers.CreateDefaultPlacer(IslandDefinition);
 

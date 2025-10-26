@@ -35,6 +35,11 @@
             <Private>False</Private>
         </Reference>
 
+        <Reference Include="Unity.Core">
+            <HintPath>$(SPZ2_PATH)\Unity.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
         <Reference Include="Game.Core.Map">
             <HintPath>$(SPZ2_PATH)\Game.Core.Map.dll</HintPath>
             <Private>False</Private>
@@ -150,7 +155,7 @@
 
 
     <ItemGroup>
-        <None Update="meta.json">
+        <None Update="manifest.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
