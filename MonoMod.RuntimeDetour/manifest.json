@@ -1,0 +1,15 @@
+{
+  "Version": "25.2.3",
+  "Description": "A flexible and easily extensible runtime detouring library, supporting x86/x86_64 on .NET Framework, .NET Core, and Mono.",
+  "Author": "0x0ade",
+  "Assemblies": [
+    "Mono.Cecil.dll",
+    "System.Reflection.Emit.ILGeneration.dll",
+    "System.Reflection.Emit.Lightweight.dll",
+    "MonoMod.ILHelpers.dll",
+    "MonoMod.Backports.dll",
+    "MonoMod.Utils.dll",
+    "MonoMod.Core.dll",
+    "MonoMod.RuntimeDetour.dll"
+  ]
+}

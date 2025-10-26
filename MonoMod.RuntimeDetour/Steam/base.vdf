@@ -1,0 +1,10 @@
+"workshopitem"
+{
+    "appid" "2162800"
+    "publishedfileid" "3542712030"
+    "contentfolder" "${CONTENT_PATH}"
+    "previewfile" "${PREVIEW_IMG}"
+    "visibility" "0"
+    "title" "MonoMod.RuntimeDetour"
+    "description" "A flexible and easily extensible runtime detouring library, supporting x86/x86_64 on .NET Framework, .NET Core, and Mono."
+}
