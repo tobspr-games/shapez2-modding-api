@@ -35,7 +35,7 @@
     </Target>
 
     <ItemGroup>
-        <None Update="meta.json">
+        <None Update="manifest.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="AssimpNet.dll">
