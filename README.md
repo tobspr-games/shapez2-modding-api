@@ -1,4 +1,4 @@
-Shapez Shifter is an official mod developed by tobspr, open to community contributions, aimed to facilitate mod creation for shapez 2. Check our example mods [here](https://github.com/tobspr-games/shapez2-mod-samples)
+Shapez Shifter is an official mod developed by tobspr, open to community contributions, aimed to facilitate mod creation for shapez 2. Before getting started, check our [example mods](https://github.com/tobspr-games/shapez2-mod-samples) or our [documentation](https://www.notion.so/tobspr-games/Shapez-2-Modding-Documentation-2543c9e752e080a1a772c6b9ada7e462)
 
 
 
